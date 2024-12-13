@@ -1,0 +1,78 @@
+```using System;
+
+namespace ATMConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            decimal balance = 1000.00m; 
+            bool isRunning = true;
+
+            Console.WriteLine("Добро пожаловать в банкомат!");
+
+            while (isRunning)
+            {
+                Console.WriteLine("\nВыберите действие:");
+                Console.WriteLine("1. Проверить баланс");
+                Console.WriteLine("2. Внести деньги");
+                Console.WriteLine("3. Снять деньги");
+                Console.WriteLine("4. Выход");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine($"Ваш текущий баланс: {balance:C}");
+                        break;
+                    case "2":
+                        Console.Write("Введите сумму для внесения: ");
+                        if (decimal.TryParse(Console.ReadLine(), out decimal deposit))
+                        {
+                            if (deposit > 0)
+                            {
+                                balance += deposit;
+                                Console.WriteLine($"Вы внесли {deposit:C}. Новый баланс: {balance:C}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Сумма должна быть положительной.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Некорректный ввод.");
+                        }
+                        break;
+                    case "3":
+                        Console.Write("Введите сумму для снятия: ");
+                        if (decimal.TryParse(Console.ReadLine(), out decimal withdrawal))
+                        {
+                            if (withdrawal > 0 && withdrawal <= balance)
+                            {
+                                balance -= withdrawal;
+                                Console.WriteLine($"Вы сняли {withdrawal:C}. Остаток на счете: {balance:C}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Недостаточно средств или некорректная сумма.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Некорректный ввод.");
+                        }
+                        break;
+                    case "4":
+                        isRunning = false;
+                        Console.WriteLine("Спасибо за использование банкомата. До свидания!");
+                        break;
+                    default:
+                        Console.WriteLine("Некорректный выбор. Пожалуйста, попробуйте снова.");
+                        break;
+                }
+            }
+        }
+    }
+}```
